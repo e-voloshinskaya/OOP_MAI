@@ -1,1 +1,16 @@
-
+{
+  "variant": 9,
+  "figures": [
+    "Triangle",
+    "Square",
+    "Rectangle"
+  ],
+  "containers": [
+  ],
+  "finished_labs": {
+    "lab1": "__in_progress__",
+    "lab0.1": "__in_progress__"
+  },
+  "reports": [
+  ]
+}
