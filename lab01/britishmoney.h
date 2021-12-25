@@ -4,14 +4,14 @@
 
 class BMoney {
     friend BMoney Add(const BMoney &m1, const BMoney &m2); // друж ф-ям есть доступ к приват полям и ф-ям класса
-    friend BMoney Subtract(const BMoney &m1, const BMoney &m2);
-    friend BMoney Divide(const BMoney &m1, const BMoney &m2);
+    friend BMoney Subtract(BMoney &m1, BMoney &m2);
+    friend BMoney Divide(BMoney &m1, BMoney &m2);
     friend bool Equal(const BMoney &m1, const BMoney &m2);
     friend bool NotEqual(const BMoney &m1, const BMoney &m2);
-    friend bool More(const BMoney &m1, const BMoney &m2);
-    friend bool Less(const BMoney &m1, const BMoney &m2);
-    friend bool MoreEqual(const BMoney &m1, const BMoney &m2);
-    friend bool LessEqual(const BMoney &m1, const BMoney &m2);
+    friend bool More(BMoney &m1, BMoney &m2);
+    friend bool Less(BMoney &m1, BMoney &m2);
+    friend bool MoreEqual(BMoney &m1, BMoney &m2);
+    friend bool LessEqual(BMoney &m1, BMoney &m2);
     friend BMoney PtoSum(unsigned long long tmp_p);
 
     public:

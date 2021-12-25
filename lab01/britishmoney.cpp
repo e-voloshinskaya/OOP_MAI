@@ -34,18 +34,18 @@ BMoney::BMoney(std::istream &is) {
     std:: cout << "Virtual wallet has been created via istream" << std:: endl;
 }
 
-void Translate() {
-    if (this.p > sh_p || this.sh > ps_sh) {
-        this.sh += this.p / sh_p;
-        this.p %= this.p;
-        this.ps += this.sh / ps_sh;
-        this.sh %= this.sh;
+void BMoney::Translate() {
+    if (this->p > sh_p || this->sh > ps_sh) {
+        this->sh += this->p / sh_p;
+        this->p %= this->p;
+        this->ps += this->sh / ps_sh;
+        this->sh %= this->sh;
     }
 }
 
 
 bool Equal(const BMoney &m1, const BMoney &m2) {
-    if (m1.ps = m2.ps && m1.sh = m2.sh && m1.p = m2.p)
+    if (m1.ps == m2.ps && m1.sh == m2.sh && m1.p == m2.p)
         return 1;
     return 0;
 }
@@ -57,7 +57,7 @@ bool NotEqual(const BMoney &m1, const BMoney &m2) {
     //return !Equal(m1, m2);
 }
 
-bool More(const BMoney &m1, const BMoney &m2) {
+bool More(BMoney &m1, BMoney &m2) {
     m1.Translate();
     m2.Translate();
     if (m1.ps > m2.ps) { return 1;}
@@ -68,20 +68,20 @@ bool More(const BMoney &m1, const BMoney &m2) {
     return 0;
 }
 
-bool LessEqual(const BMoney &m1, const BMoney &m2) {
+bool LessEqual(BMoney &m1, BMoney &m2) {
     return !More(m1, m2);
 }
 
-bool Less(const BMoney &m1, const BMoney &m2) {
+bool Less(BMoney &m1, BMoney &m2) {
     return More(m2, m1);
 }
 
-bool MoreEqual(const BMoney &m1, const BMoney &m2) {
+bool MoreEqual(BMoney &m1, BMoney &m2) {
     return !More(m2, m1);
 }
 
-bool Empty() {
-    if (this.ps == 0 && this.sh == 0 && this.p == 0)
+bool BMoney::Empty() {
+    if (this->ps == 0 && this->sh == 0 && this->p == 0)
         return 1;
     return 0;
 }
@@ -95,8 +95,8 @@ BMoney Add(const BMoney& m1, const BMoney &m2) {
     return res;
 }
 
-unsigned long long ToPennies() {
-    unsigned long long res = this.ps * ps_sh * sh_p + this.sh * sh_p + this.p;
+unsigned long long BMoney::ToPennies() {
+    unsigned long long res = this->ps * ps_sh * sh_p + this->sh * sh_p + this->p;
     return res;
 };
 
@@ -108,7 +108,7 @@ BMoney PtoSum(unsigned long long tmp_p) {
     return res;
 }
 
-BMoney Subtract(const BMoney& m1, const BMoney &m2) {
+BMoney Subtract(BMoney &m1, BMoney &m2) {
     BMoney res;
     if (MoreEqual(m1, m2)) {
         unsigned long long tmp = m1.ToPennies() - m2.ToPennies();
@@ -116,10 +116,10 @@ BMoney Subtract(const BMoney& m1, const BMoney &m2) {
         return res;
     }
     std:: cout << "The operation could not be performed. The first sum is less than the second." << std:: endl;
-    return;
+    return BMoney(); // возвращение нулевого кошелька
 }
 
-BMoney Divide(const BMoney &m1, const BMoney &m2) {
+BMoney Divide(BMoney &m1, BMoney &m2) {
     BMoney res;
     if (!m2.Empty()) {
         unsigned long long tmp = m1.ToPennies() / m2.ToPennies();
@@ -127,30 +127,29 @@ BMoney Divide(const BMoney &m1, const BMoney &m2) {
         return res;
     }
     std:: cout << "The operation could not be performed. The second sum equals null." << std:: endl;
-    return;
+    return BMoney();
 }
 
-BMoney Divide_real(double C) {
+BMoney BMoney::Divide_real(double C) { // все функции класса (не friend) обязательно должны иметь [назв-е класса]::
     if (C == 0) {
         std:: cout << "The operation could not be performed. The number equals null." << std:: endl;
-        return;
+        return BMoney();
     }
     BMoney res;
-    unsigned long long tmp = this.ToPennies() / C;
+    unsigned long long tmp = this->ToPennies() / C;
     res = PtoSum(tmp);
     return res;
 } 
 
-BMoney Multiply_real(double C) {
+BMoney BMoney::Multiply_real(double C) {
     BMoney res;
-    unsigned long long tmp = this.ToPennies() * C;
+    unsigned long long tmp = this->ToPennies() * C;
     res = PtoSum(tmp);
     return res;
 }
 
-void Print(std::ostream &os) {
-    os << m.ps << " pounds " << m.sh << " shillings " << m.p << " pennies " << std::endl;
-    return os;
+void BMoney::Print(std::ostream &os) {
+    os << this->ps << " pounds " << this->sh << " shillings " << this->p << " pennies " << std::endl;
 }
 
 BMoney::~BMoney() {
