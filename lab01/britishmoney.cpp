@@ -1,17 +1,17 @@
 #include "britishmoney.h"
 #include <cmath>
 
-unsigned char ps_sh = 20;
-unsigned char sh_p = 12;
+uint16_t ps_sh = 20;
+uint16_t sh_p = 12;
 
 BMoney::BMoney() {
     ps = 0;
     sh = 0;
     p = 0;
-    std:: cout << "Start: " << std:: endl;
+    std:: cout << "\t\t\t\t~virtual wallet created by default~" << std:: endl;
 }
 
-BMoney::BMoney(unsigned long long a, unsigned char b, unsigned char c) {
+BMoney::BMoney(unsigned long long a, uint16_t b, uint16_t c) {
     if (ps < 0 || sh < 0 || p < 0) {
         std:: cout << "Parameters must be positive or zero integer numbers" << std:: endl;
         // что тут происходит
@@ -21,7 +21,7 @@ BMoney::BMoney(unsigned long long a, unsigned char b, unsigned char c) {
         sh = b;
         p = c;
     }
-    std:: cout << "Virtual wallet has been created according to parameters" << std:: endl;
+    std:: cout << "\t\t\t\t~virtual wallet created according to parameters~" << std:: endl;
 }
 
 BMoney::BMoney(std::istream &is) {
@@ -31,7 +31,7 @@ BMoney::BMoney(std::istream &is) {
         std:: cout << "Invalind input. Try again." << std:: endl;
         is >> ps >> sh >> p;
     }
-    std:: cout << "Virtual wallet has been created via istream" << std:: endl;
+    std:: cout << "\t\t\t\t~virtual wallet created via istream~" << std:: endl;
 }
 
 void BMoney::Translate() {
@@ -88,15 +88,16 @@ bool BMoney::Empty() {
 
 
 BMoney Add(const BMoney& m1, const BMoney &m2) {
-    BMoney res;
+    BMoney res; //(m1.ps + m2.ps + (m1.sh + m2.sh) / 20, (m1.sh + m2.sh) % 20 + ((int)m1.p + (int)m2.p) / 12, (m1.p + m2.p) % 12);
     res.p = (m1.p + m2.p) % sh_p;
-    res.sh = (m1.sh + m2.sh) % ps_sh + (m1.p + m2.p) / sh_p;
-    res.ps = m1.ps + m2.ps + (m1.sh + m2.sh) / ps_sh;
+    res.sh = (m1.sh + m2.sh + (m1.p + m2.p) / sh_p) % ps_sh;
+    res.ps = m1.ps + m2.ps + (m1.sh + m2.sh + (m1.p + m2.p) / sh_p) / ps_sh;
+    std:: cout << "Successful" << std:: endl;
     return res;
 }
 
 unsigned long long BMoney::ToPennies() {
-    unsigned long long res = this->ps * ps_sh * sh_p + this->sh * sh_p + this->p;
+    unsigned long long res = ps * ps_sh * sh_p + sh * sh_p + p;
     return res;
 };
 
@@ -109,22 +110,18 @@ BMoney PtoSum(unsigned long long tmp_p) {
 }
 
 BMoney Subtract(BMoney &m1, BMoney &m2) {
-    BMoney res;
     if (MoreEqual(m1, m2)) {
         unsigned long long tmp = m1.ToPennies() - m2.ToPennies();
-        res = PtoSum(tmp);
-        return res;
+        return PtoSum(tmp);
     }
     std:: cout << "The operation could not be performed. The first sum is less than the second." << std:: endl;
     return BMoney(); // возвращение нулевого кошелька
 }
 
 BMoney Divide(BMoney &m1, BMoney &m2) {
-    BMoney res;
     if (!m2.Empty()) {
         unsigned long long tmp = m1.ToPennies() / m2.ToPennies();
-        res = PtoSum(tmp);
-        return res;
+        return PtoSum(tmp);
     }
     std:: cout << "The operation could not be performed. The second sum equals null." << std:: endl;
     return BMoney();
@@ -135,23 +132,31 @@ BMoney BMoney::Divide_real(double C) { // все функции класса (н
         std:: cout << "The operation could not be performed. The number equals null." << std:: endl;
         return BMoney();
     }
-    BMoney res;
     unsigned long long tmp = this->ToPennies() / C;
-    res = PtoSum(tmp);
-    return res;
+    return PtoSum(tmp);
 } 
 
 BMoney BMoney::Multiply_real(double C) {
-    BMoney res;
-    unsigned long long tmp = this->ToPennies() * C;
-    res = PtoSum(tmp);
-    return res;
+    unsigned long long tmp = ToPennies() * C;
+    return PtoSum(tmp);
 }
 
-void BMoney::Print(std::ostream &os) {
-    os << this->ps << " pounds " << this->sh << " shillings " << this->p << " pennies " << std::endl;
+void BMoney::Print(std::ostream &os) { // totally works
+    os << ps << " pounds " << sh << " shillings " << p << " pennies " << std::endl;
 }
 
 BMoney::~BMoney() {
-    std:: cout << "Your wallet has been deleted" << std:: endl;
+    std:: cout << "\t\t\t\t ~wallet has been deleted~" << std:: endl;
 }
+/*
+BMoney BMoney::operator=(const BMoney &other)
+{
+    //if (this == &other) {
+    //    return *this;
+    //}
+    ps = other.ps;
+    sh = other.sh;
+    p = other.p;
+    return *this;
+}
+*/
