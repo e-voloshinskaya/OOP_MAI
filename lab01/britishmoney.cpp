@@ -14,7 +14,6 @@ BMoney::BMoney() {
 BMoney::BMoney(unsigned long long a, uint16_t b, uint16_t c) {
     if (ps < 0 || sh < 0 || p < 0) {
         std:: cout << "Parameters must be positive or zero integer numbers" << std:: endl;
-        // что тут происходит
     }
     else {
         ps = a;
@@ -34,15 +33,6 @@ BMoney::BMoney(std::istream &is) {
     std:: cout << "\t\t\t\t~virtual wallet created via istream~" << std:: endl;
 }
 
-void BMoney::Translate() {
-    if (this->p > sh_p || this->sh > ps_sh) {
-        this->sh += this->p / sh_p;
-        this->p %= this->p;
-        this->ps += this->sh / ps_sh;
-        this->sh %= this->sh;
-    }
-}
-
 
 bool Equal(const BMoney &m1, const BMoney &m2) {
     if (m1.ps == m2.ps && m1.sh == m2.sh && m1.p == m2.p)
@@ -57,70 +47,68 @@ bool NotEqual(const BMoney &m1, const BMoney &m2) {
     //return !Equal(m1, m2);
 }
 
-bool More(BMoney &m1, BMoney &m2) {
-    m1.Translate();
-    m2.Translate();
-    if (m1.ps > m2.ps) { return 1;}
-    else if (m1.ps == m2.ps) {
-        if (m1.sh > m2.sh) { return 1;}
-        else if (m1.sh == m2.sh && m1.p > m2.p) { return 1;}
-    }
+bool More(const BMoney &m1, const BMoney &m2) {
+    unsigned long long tmp1 = m1.ToPenny();
+    unsigned long long tmp2 = m2.ToPenny();
+    if (tmp1 > tmp2)
+        return 1;
     return 0;
 }
 
-bool LessEqual(BMoney &m1, BMoney &m2) {
+bool LessEqual(const BMoney &m1, const BMoney &m2) {
     return !More(m1, m2);
 }
 
-bool Less(BMoney &m1, BMoney &m2) {
+bool Less(const BMoney &m1, const BMoney &m2) {
     return More(m2, m1);
 }
 
-bool MoreEqual(BMoney &m1, BMoney &m2) {
+bool MoreEqual(const BMoney &m1, const BMoney &m2) {
     return !More(m2, m1);
 }
 
-bool BMoney::Empty() {
-    if (this->ps == 0 && this->sh == 0 && this->p == 0)
+bool BMoney::Empty() const {
+    if (ps == 0 && sh == 0 && p == 0)
         return 1;
     return 0;
 }
 
 
 BMoney Add(const BMoney& m1, const BMoney &m2) {
-    BMoney res; //(m1.ps + m2.ps + (m1.sh + m2.sh) / 20, (m1.sh + m2.sh) % 20 + ((int)m1.p + (int)m2.p) / 12, (m1.p + m2.p) % 12);
+    BMoney res;
     res.p = (m1.p + m2.p) % sh_p;
     res.sh = (m1.sh + m2.sh + (m1.p + m2.p) / sh_p) % ps_sh;
     res.ps = m1.ps + m2.ps + (m1.sh + m2.sh + (m1.p + m2.p) / sh_p) / ps_sh;
-    std:: cout << "Successful" << std:: endl;
     return res;
 }
 
-unsigned long long BMoney::ToPennies() {
+unsigned long long BMoney::ToPenny() const {
     unsigned long long res = ps * ps_sh * sh_p + sh * sh_p + p;
+    //std:: cout << res << std:: endl;
     return res;
 };
 
 BMoney PtoSum(unsigned long long tmp_p) {
     BMoney res;
     res.ps = tmp_p / (ps_sh * sh_p);
-    res.sh = tmp_p / sh_p % ps_sh;
+    tmp_p %= (ps_sh * sh_p);
+    res.sh = tmp_p / sh_p;
     res.p = tmp_p % sh_p;
     return res;
 }
 
-BMoney Subtract(BMoney &m1, BMoney &m2) {
-    if (MoreEqual(m1, m2)) {
-        unsigned long long tmp = m1.ToPennies() - m2.ToPennies();
-        return PtoSum(tmp);
+BMoney Subtract(const BMoney &m1, const BMoney &m2) {
+    if (Less(m1, m2)) {
+        std:: cout << "The operation could not be performed. The first sum is less than the second." << std:: endl;
+        return BMoney(); // возвращение нулевого кошелька
     }
-    std:: cout << "The operation could not be performed. The first sum is less than the second." << std:: endl;
-    return BMoney(); // возвращение нулевого кошелька
+    unsigned long long tmp = m1.ToPenny() - m2.ToPenny();
+    return PtoSum(tmp);
 }
 
 BMoney Divide(BMoney &m1, BMoney &m2) {
     if (!m2.Empty()) {
-        unsigned long long tmp = m1.ToPennies() / m2.ToPennies();
+        unsigned long long tmp = m1.ToPenny() / m2.ToPenny();
         return PtoSum(tmp);
     }
     std:: cout << "The operation could not be performed. The second sum equals null." << std:: endl;
@@ -132,12 +120,12 @@ BMoney BMoney::Divide_real(double C) { // все функции класса (н
         std:: cout << "The operation could not be performed. The number equals null." << std:: endl;
         return BMoney();
     }
-    unsigned long long tmp = this->ToPennies() / C;
+    unsigned long long tmp = this->ToPenny() / C;
     return PtoSum(tmp);
 } 
 
 BMoney BMoney::Multiply_real(double C) {
-    unsigned long long tmp = ToPennies() * C;
+    unsigned long long tmp = ToPenny() * C;
     return PtoSum(tmp);
 }
 
@@ -145,18 +133,25 @@ void BMoney::Print(std::ostream &os) { // totally works
     os << ps << " pounds " << sh << " shillings " << p << " pennies " << std::endl;
 }
 
-BMoney::~BMoney() {
-    std:: cout << "\t\t\t\t ~wallet has been deleted~" << std:: endl;
-}
-/*
 BMoney BMoney::operator=(const BMoney &other)
 {
-    //if (this == &other) {
-    //    return *this;
-    //}
     ps = other.ps;
     sh = other.sh;
     p = other.p;
     return *this;
 }
-*/
+
+void BMoney::Translate() {
+    if (p > sh_p || sh > ps_sh) {
+        //uint16_t tmp_p = p;
+        //uint16_t tmp_s = sh;
+        sh += p / sh_p;
+        p %= sh_p;
+        ps += sh / ps_sh;
+        sh = (sh % ps_sh) + p / sh_p;
+    }
+}
+
+BMoney::~BMoney() {
+    std:: cout << "\t\t\t\t ~wallet has been deleted~" << std:: endl;
+}
