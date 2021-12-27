@@ -1,35 +1,37 @@
-#ifndef BRITMONEY_H
-#define BRITMONEY_H
 #include <iostream>
+#include "britishmoney.h"
 
-class BMoney {
-    friend BMoney Add(const BMoney &m1, const BMoney &m2); // друж ф-ям есть доступ к приват полям и ф-ям класса
-    friend BMoney Subtract(BMoney &m1, BMoney &m2);
-    friend BMoney Divide(BMoney &m1, BMoney &m2);
-    friend bool Equal(const BMoney &m1, const BMoney &m2);
-    friend bool NotEqual(const BMoney &m1, const BMoney &m2);
-    friend bool More(BMoney &m1, BMoney &m2);
-    friend bool Less(BMoney &m1, BMoney &m2);
-    friend bool MoreEqual(BMoney &m1, BMoney &m2);
-    friend bool LessEqual(BMoney &m1, BMoney &m2);
-    friend BMoney PtoSum(unsigned long long tmp_p);
+int main(void) {
 
-    public:
-        BMoney(); // конструктор по умолчанию (все равно 0)
-        BMoney(unsigned long long a, unsigned char b, unsigned char c); // конструктор с параметрами, инициализация напрямую в коде
-        BMoney(std::istream &is); // конструктор из istream
-        BMoney Divide_real(double C);
-        BMoney Multiply_real(double C);
-        void Print(std::ostream &os);
-        ~BMoney(); // деструктор
+    double arg;
 
-    private:
-        unsigned long long ps;
-        unsigned char sh;
-        unsigned char p;
-        void Translate();
-        unsigned long long ToPennies();
-        bool Empty();
-
-};
-#endif
+    BMoney a1(1, 2, 3);
+    BMoney a2(std::cin);
+    a2.Translate();
+    std::cin >> arg;
+    a1.Print(std::cout);
+    a2.Print(std::cout);
+    std::cout << "a1 < a2 = " << (a1 < a2) << std::endl;
+    std::cout << "a1 > a2 = " << (a1 > a2) << std::endl;
+    std::cout << "a1 <= a2 = " << (a1 <= a2) << std::endl;
+    std::cout << "a1 >= a2 = " << (a1 >= a2) << std::endl;
+    std::cout << "a1 == a2 = " << (a1 == a2) << std::endl;
+    std::cout << "a1 != a2 = " << (a1 != a2) << std::endl;
+    BMoney a3 = a1 + a2;
+    std::cout << "a1 + a2 = " << std::endl;
+    a3.Print(std::cout);
+    BMoney a4 = a2 - 15_p;
+    std::cout << "a2 - 15 pennies = " << std::endl;
+    a4.Print(std::cout);
+    BMoney a5 = a2 / a1;
+    std::cout << "a2 / a1 = " << std::endl;
+    a5.Print(std::cout);
+    BMoney a6 = a1 * arg;
+    std::cout << "a1 * C = " << std::endl;
+    a6.Print(std::cout);
+    BMoney a7 = a1 / arg;
+    std::cout << "a1 / C = " << std::endl;
+    a7.Print(std::cout);
+    
+    return 0;
+}
