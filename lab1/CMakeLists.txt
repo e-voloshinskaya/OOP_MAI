@@ -8,4 +8,4 @@ add_executable(lab1
   main.cpp
   figure.h
   triangle.h triangle.cpp 
- "rectangle.h" "rectangle.cpp" "square.h" "square.cpp")
+ rectangle.h rectangle.cpp square.h square.cpp)
