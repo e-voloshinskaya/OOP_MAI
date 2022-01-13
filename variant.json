@@ -8,12 +8,14 @@
   "containers": [
   ],
   "finished_labs": {
-    "lab1": "__in_progress__",
+    "lab1": "lab1",
     "lab0.1": "lab01",
-    "lab0.2": "lab02"
+    "lab0.2": "lab02",
+    "lab2": "__in_progress__"
   },
   "reports": [
     "lab0.1",
-    "lab0.2"
+    "lab0.2",
+    "lab1"
   ]
 }
