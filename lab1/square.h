@@ -7,6 +7,9 @@
 
 class Square : public Figure {
 
+//friend std::istream& operator>>(std::istream& is, Square& t);
+//friend std::ostream& operator<<(std::ostream& os, Square& t);
+
 public:
   Square();
   Square(Point a, Point b, Point c, Point d);
