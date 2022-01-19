@@ -22,6 +22,17 @@ Triangle::Triangle(const Triangle& other)
   std::cout << "Triangle copy created" << std::endl;
 }
 
+Triangle &Triangle::operator=(const Triangle &other)
+{
+    if (this == &other) {
+        return *this;
+    }
+    p1 = other.p1;
+    p2 = other.p2;
+    p3 = other.p3;
+    return *this;
+}
+
 size_t Triangle::VertexesNumber() {
   return(size_t)3;
 }
