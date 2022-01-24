@@ -6,16 +6,18 @@
     "Rectangle"
   ],
   "containers": [
+    "TLinkedList"
   ],
   "finished_labs": {
-    "lab1": "lab1",
-    "lab0.1": "lab01",
-    "lab0.2": "lab02",
-    "lab2": "__in_progress__"
+    "lab1:4": "lab1",
+    "lab0.1:4": "lab01",
+    "lab0.2:3": "lab02",
+    "lab2:3": "lab2"
   },
   "reports": [
     "lab0.1",
     "lab0.2",
-    "lab1"
+    "lab1",
+    "lab2"
   ]
 }
