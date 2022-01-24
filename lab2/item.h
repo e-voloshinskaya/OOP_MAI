@@ -11,6 +11,9 @@ public:
 
     Item* Left();
     Item* Right();
+    
+    void InsLeft(Item* item);
+    void InsRight(Item* item);
 
     Triangle& GetTriangle();
 

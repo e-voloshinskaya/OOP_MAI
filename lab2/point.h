@@ -6,7 +6,7 @@
 class Point {
 
 friend std::istream& operator>>(std::istream& is, Point& p);
-friend std::ostream& operator<<(std::ostream& os, Point& p);
+friend std::ostream& operator<<(std::ostream& os, const Point& p);
 
 public:
   Point();

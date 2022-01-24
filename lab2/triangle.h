@@ -13,6 +13,7 @@ public:
   Triangle(std::istream &is);
   Triangle(const Triangle& other);
   Triangle &operator=(const Triangle &other);
+  friend std::ostream& operator<<(std::ostream& os, const Triangle& t);
 
   size_t VertexesNumber();
   double Area();

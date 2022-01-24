@@ -1,3 +1,5 @@
+#include "item.h"
+
 Item::Item(const Triangle &t)
 {
     this->triangle = t;
@@ -17,9 +19,19 @@ Item *Item::Left()
     return this->prev;
 }
 
-Item *Item::Right()
+Item* Item::Right()
 {
     return this->next;
+}
+
+void Item::InsLeft(Item* item)
+{
+    this->prev = item;
+}
+
+void Item::InsRight(Item* item)
+{
+    this->next = item;
 }
 
 Triangle& Item::GetTriangle()

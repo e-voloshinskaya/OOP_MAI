@@ -31,7 +31,7 @@ public:
 
 private:
     Item* head;
-    //Item* tail;
+    Item* tail;
 };
 
 #endif // TLINKEDLIST_H

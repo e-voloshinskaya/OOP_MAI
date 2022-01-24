@@ -5,12 +5,12 @@
 
 Triangle::Triangle()
     : p1(0.0, 0.0), p2(0.0, 0.0), p3(0.0, 0.0) {  // можно, но длиннее p1(Point(0.0, 0.0))
-  std::cout << "Default triangle created" << std::endl;
+  //std::cout << "Default triangle created" << std::endl;
 }
 
 Triangle::Triangle(Point a, Point b, Point c)
     : p1(a), p2(b), p3(c) {
-  std::cout << "Triangle created by parameters" << std::endl;
+  //std::cout << "Triangle created by parameters" << std::endl;
 }
 
 Triangle::Triangle(std::istream &is) {
@@ -19,7 +19,7 @@ Triangle::Triangle(std::istream &is) {
 
 Triangle::Triangle(const Triangle& other)
     : Triangle(other.p1, other.p2, other.p3) {
-  std::cout << "Triangle copy created" << std::endl;
+  //std::cout << "Triangle copy created" << std::endl;
 }
 
 Triangle &Triangle::operator=(const Triangle &other)
@@ -31,6 +31,12 @@ Triangle &Triangle::operator=(const Triangle &other)
     p2 = other.p2;
     p3 = other.p3;
     return *this;
+}
+
+std::ostream& operator<<(std::ostream& os, const Triangle& t)
+{
+  os << "Triangle: " << t.p1 << " " << t.p2 << " " << t.p3 << std::endl;
+  return os;
 }
 
 size_t Triangle::VertexesNumber() {
