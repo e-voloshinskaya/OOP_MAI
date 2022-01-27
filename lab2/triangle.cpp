@@ -33,6 +33,17 @@ Triangle &Triangle::operator=(const Triangle &other)
     return *this;
 }
 
+bool Triangle::operator==(const Triangle &other)
+{
+    return (p1 == other.p1) && (p2 == other.p2) && (p3 == other.p3);
+}
+
+std::istream& operator>>(std::istream& is, Triangle& t)
+{
+  is >> t.p1 >> t.p2 >> t.p3;
+  return is;
+}
+
 std::ostream& operator<<(std::ostream& os, const Triangle& t)
 {
   os << "Triangle: " << t.p1 << " " << t.p2 << " " << t.p3 << std::endl;

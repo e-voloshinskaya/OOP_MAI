@@ -12,8 +12,12 @@ public:
   Triangle(Point a, Point b, Point c);
   Triangle(std::istream &is);
   Triangle(const Triangle& other);
+
   Triangle &operator=(const Triangle &other);
+  bool operator==(const Triangle &other);
+  friend std::istream& operator>>(std::istream& is, Triangle& o);
   friend std::ostream& operator<<(std::ostream& os, const Triangle& t);
+
 
   size_t VertexesNumber();
   double Area();

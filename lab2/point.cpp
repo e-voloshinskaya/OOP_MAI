@@ -10,6 +10,11 @@ Point::Point(std::istream &is) {
   is >> x_ >> y_;
 }
 
+bool Point::operator==(const Point &other)
+{
+  return ((x_ == other.x_) && (y_ == other.y_));
+}
+
 double Point::dist(Point& other) {
   double dx = (other.x_ - x_);
   double dy = (other.y_ - y_);

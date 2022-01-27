@@ -13,6 +13,7 @@ public:
   Point(double x, double y);
   Point(std::istream &is);
 
+  bool operator==(const Point &other);
   double dist(Point& other);
   
 private:
