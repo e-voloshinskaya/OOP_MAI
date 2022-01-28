@@ -12,13 +12,13 @@ public:
     size_t Length();
     bool Empty();
 
-    const Triangle& First();
-    const Triangle& Last();
-    const Triangle& GetItem(size_t idx);
+    const std::shared_ptr<Triangle> First();
+    const std::shared_ptr<Triangle> Last();
+    const std::shared_ptr<Triangle> GetItem(size_t idx);
 
-    void InsertFirst(const Triangle& triangle);
-    void InsertLast(const Triangle& triangle);
-    void Insert(const Triangle& triangle, size_t position);
+    void InsertFirst(const std::shared_ptr<Triangle> triangle);
+    void InsertLast(const std::shared_ptr<Triangle> triangle);
+    void Insert(const std::shared_ptr<Triangle> triangle, size_t position);
 
     void RemoveFirst();
     void RemoveLast();
@@ -30,8 +30,8 @@ public:
     virtual ~TLinkedList();
 
 private:
-    Item* head;
-    Item* tail;
+    std::shared_ptr<Item> head;
+    std::shared_ptr<Item> tail;
 };
 
 #endif // TLINKEDLIST_H

@@ -14,9 +14,9 @@ int main(void)
   Point b3(0.5, 1);
   Point c3(2, 1);
 
-  Triangle t1(a1, b1, c1);
-  Triangle t2(a2, b2, c2);
-  Triangle t3(a3, b3, c3);
+  std::shared_ptr<Triangle> t1(new Triangle (a1, b1, c1));
+  std::shared_ptr<Triangle> t2(new Triangle (a2, b2, c2));
+  std::shared_ptr<Triangle> t3(new Triangle (a3, b3, c3));
   
   std::cout << l << std::endl;
   
@@ -51,12 +51,12 @@ int main(void)
   std::cout << l << std::endl;
   l.InsertFirst(t3);
   std::cout << l << std::endl;
-  std::cout << l.First() << std::endl;
-  std::cout << l.Last() << std::endl;
-  std::cout << l.GetItem(1) << std::endl;
-  std::cout << l.GetItem(2) << std::endl;
-  std::cout << l.GetItem(3) << std::endl;
-  std::cout << l.GetItem(4) << std::endl;
+  std::cout << *l.First() << std::endl;
+  std::cout << *l.Last() << std::endl;
+  std::cout << *l.GetItem(1) << std::endl;
+  std::cout << *l.GetItem(2) << std::endl;
+  std::cout << *l.GetItem(3) << std::endl;
+  std::cout << *l.GetItem(4) << std::endl;
   l.Clear();
   std::cout << l << std::endl;
   

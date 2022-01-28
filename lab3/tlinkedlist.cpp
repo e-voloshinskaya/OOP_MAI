@@ -16,13 +16,13 @@ bool TLinkedList::Empty()
 size_t TLinkedList::Length()
 {
     size_t size = 0;
-    for (Item* i = head; i != nullptr; i = i->Right()) {
+    for (std::shared_ptr<Item> i = head; i != nullptr; i = i->Right()) {
         ++size;
     }
     return size;
 }
 
-const Triangle& TLinkedList::First()
+const std::shared_ptr<Triangle> TLinkedList::First()
 {
     if (head == nullptr) {
         std::cout << "List is empty" << std::endl;
@@ -31,14 +31,14 @@ const Triangle& TLinkedList::First()
     return head -> GetTriangle();
 }
 
-const Triangle& TLinkedList::Last()
+const std::shared_ptr<Triangle> TLinkedList::Last()
 {
     if (head == nullptr) {
         std::cout << "List is empty" << std::endl;
         exit(1);
     }
-    Item* pi = head;
-    Item* i = head->Right();
+    std::shared_ptr<Item> pi = head;
+    std::shared_ptr<Item> i = head->Right();
 
     for (; i != nullptr; i = i -> Right()) {
         pi = i;
@@ -46,7 +46,7 @@ const Triangle& TLinkedList::Last()
     return pi -> GetTriangle();
 }
 
-const Triangle& TLinkedList::GetItem(size_t idx)
+const std::shared_ptr<Triangle> TLinkedList::GetItem(size_t idx)
 {
     size_t len = Length();
     if (head == nullptr) {
@@ -58,7 +58,7 @@ const Triangle& TLinkedList::GetItem(size_t idx)
         exit(1);
     }
 
-    Item* item = head;
+    std::shared_ptr<Item> item = head;
     for (size_t i = 1; i < idx; ++i) {
         item = item->Right();
     }
@@ -66,9 +66,9 @@ const Triangle& TLinkedList::GetItem(size_t idx)
 }
 
 
-void TLinkedList::InsertFirst(const Triangle& triangle)
+void TLinkedList::InsertFirst(const std::shared_ptr<Triangle> triangle)
 {
-    Item* item = new Item(triangle);
+    std::shared_ptr<Item> item(new Item(triangle));
     if (head == nullptr) {
         head = item;
         tail = item;
@@ -81,9 +81,9 @@ void TLinkedList::InsertFirst(const Triangle& triangle)
 }
 
 
-void TLinkedList::InsertLast(const Triangle& triangle)
+void TLinkedList::InsertLast(const std::shared_ptr<Triangle> triangle)
 {
-    Item* item = new Item(triangle);
+    std::shared_ptr<Item> item(new Item(triangle));
     if (head == nullptr) {
         head = item;
         tail = item;
@@ -95,7 +95,7 @@ void TLinkedList::InsertLast(const Triangle& triangle)
     tail = item;
 }
 
-void TLinkedList::Insert(const Triangle& triangle, size_t position)
+void TLinkedList::Insert(const std::shared_ptr<Triangle> triangle, size_t position)
 {
     size_t len = Length();
     if (position > len + 1) {
@@ -110,12 +110,12 @@ void TLinkedList::Insert(const Triangle& triangle, size_t position)
         InsertLast(triangle);
         return;
     }
-    Item* item = new Item(triangle);
-    Item* curr = head;
+    std::shared_ptr<Item> item(new Item(triangle));
+    std::shared_ptr<Item> curr = head;
     for (size_t i = 1; i < position; ++i) {
         curr = curr->Right();
     }
-    Item* prev = curr->Left();
+    std::shared_ptr<Item> prev = curr->Left();
     prev->InsRight(item);
     curr->InsLeft(item);
     item->InsLeft(prev);
@@ -129,15 +129,13 @@ void TLinkedList::RemoveFirst()
         return;
     }
     if (head == tail) {
-        delete head;
         head = nullptr;
         tail = nullptr;
         return;
     }
-    Item* item = head;
+    std::shared_ptr<Item> item = head;
     head = head->Right();
     head->InsLeft(nullptr);
-    delete item;
 }
 
 void TLinkedList::RemoveLast()
@@ -147,15 +145,13 @@ void TLinkedList::RemoveLast()
         return;
     }
     if (head == tail) {
-        delete head;
         head = nullptr;
         tail = nullptr;
         return;
     }
-    Item* item = tail;
+    std::shared_ptr<Item> item = tail;
     tail = tail->Left();
     tail->InsRight(nullptr);
-    delete item;
 }
 
 void TLinkedList::Remove(size_t position)
@@ -177,15 +173,14 @@ void TLinkedList::Remove(size_t position)
         RemoveLast();
         return;
     }
-    Item* item = head;
+    std::shared_ptr<Item> item = head;
     for (size_t i = 1; i < position; ++i) {
         item = item->Right();
     }
-    Item* left = item->Left();
-    Item* right = item->Right();
+    std::shared_ptr<Item> left = item->Left();
+    std::shared_ptr<Item> right = item->Right();
     left->InsRight(right);
     right->InsLeft(left);
-    delete item;
 }
 
 std::ostream &operator<<(std::ostream &os, const TLinkedList &list)
@@ -194,11 +189,11 @@ std::ostream &operator<<(std::ostream &os, const TLinkedList &list)
         os << "List is empty";
         return os;
     }
-    for (Item* i = list.head; i != nullptr; i = i->Right()) {
+    for (std::shared_ptr<Item> i = list.head; i != nullptr; i = i->Right()) {
         if (i->Right() != nullptr)
-            os << i->GetTriangle().Area() << " -> ";
+            os << i->GetTriangle()->Area() << " -> ";
         else
-            os << i->GetTriangle().Area();
+            os << i->GetTriangle()->Area();
     }
     return os;
 }

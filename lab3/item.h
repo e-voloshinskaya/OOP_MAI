@@ -2,29 +2,30 @@
 #define ITEM_H
 
 #include "triangle.h"
+#include <memory>
 
 class Item
 {
 public:
-    Item(const Triangle &s);
-    Item(const Item &other);
+    Item(const std::shared_ptr<Triangle> t);
+    Item(const std::shared_ptr<Item> other);
 
-    Item* Left();
-    Item* Right();
+    std::shared_ptr<Item> Left();
+    std::shared_ptr<Item> Right();
     
-    void InsLeft(Item* item);
-    void InsRight(Item* item);
+    void InsLeft(std::shared_ptr<Item> item);
+    void InsRight(std::shared_ptr<Item> item);
 
-    Triangle& GetTriangle();
+    std::shared_ptr<Triangle> GetTriangle();
 
-    friend std::ostream &operator<<(std::ostream &os, const Item& item);
+    friend std::ostream &operator<<(std::ostream &os, const std::shared_ptr<Item> item);
 
     virtual ~Item();
 
 private:
-    Triangle triangle;
-    Item* prev;
-    Item* next;
+    std::shared_ptr<Triangle> triangle;
+    std::shared_ptr<Item> prev;
+    std::shared_ptr<Item> next;
 };
 
 #endif // ITEM_H
