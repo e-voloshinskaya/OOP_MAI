@@ -9,7 +9,7 @@ template <class T>
 class Item
 {
 public:
-    Item(const std::shared_ptr<T> t);
+    Item(const std::shared_ptr<T> o);
     Item(const std::shared_ptr< Item<T> > other);
 
     std::shared_ptr< Item<T> > Left();
@@ -26,7 +26,7 @@ public:
     virtual ~Item();
 
 private:
-    std::shared_ptr<T> triangle;
+    std::shared_ptr<T> object;
     std::shared_ptr< Item<T> > prev;
     std::shared_ptr< Item<T> > next;
 };

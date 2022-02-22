@@ -73,9 +73,9 @@ const std::shared_ptr<T> TLinkedList<T>::GetItem(size_t idx)
 }
 
 template <class T>
-void TLinkedList<T>::InsertFirst(const std::shared_ptr<T> triangle)
+void TLinkedList<T>::InsertFirst(const std::shared_ptr<T> object)
 {
-    std::shared_ptr<Item<T>> item(new Item<T>(triangle));
+    std::shared_ptr<Item<T>> item(new Item<T>(object));
     if (head == nullptr) {
         head = item;
         tail = item;
@@ -88,9 +88,9 @@ void TLinkedList<T>::InsertFirst(const std::shared_ptr<T> triangle)
 }
 
 template <class T>
-void TLinkedList<T>::InsertLast(const std::shared_ptr<T> triangle)
+void TLinkedList<T>::InsertLast(const std::shared_ptr<T> object)
 {
-    std::shared_ptr<Item<T>> item(new Item<T>(triangle));
+    std::shared_ptr<Item<T>> item(new Item<T>(object));
     if (head == nullptr) {
         head = item;
         tail = item;
@@ -103,7 +103,7 @@ void TLinkedList<T>::InsertLast(const std::shared_ptr<T> triangle)
 }
 
 template <class T>
-void TLinkedList<T>::Insert(const std::shared_ptr<T> triangle, size_t position)
+void TLinkedList<T>::Insert(const std::shared_ptr<T> object, size_t position)
 {
     size_t len = Length();
     if (position > len + 1) {
@@ -111,14 +111,14 @@ void TLinkedList<T>::Insert(const std::shared_ptr<T> triangle, size_t position)
         return;
     }
     if (position == 1) {
-        InsertFirst(triangle);
+        InsertFirst(object);
         return;
     }
     if (position == len + 1) {
-        InsertLast(triangle);
+        InsertLast(object);
         return;
     }
-    std::shared_ptr<Item<T>> item(new Item<T>(triangle));
+    std::shared_ptr<Item<T>> item(new Item<T>(object));
     std::shared_ptr<Item<T>> curr = head;
     for (size_t i = 1; i < position; ++i) {
         curr = curr->Right();

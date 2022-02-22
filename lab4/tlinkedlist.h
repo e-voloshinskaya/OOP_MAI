@@ -17,9 +17,9 @@ public:
     const std::shared_ptr<T> Last();
     const std::shared_ptr<T> GetItem(size_t idx);
 
-    void InsertFirst(const std::shared_ptr<T> triangle);
-    void InsertLast(const std::shared_ptr<T> triangle);
-    void Insert(const std::shared_ptr<T> triangle, size_t position);
+    void InsertFirst(const std::shared_ptr<T> object);
+    void InsertLast(const std::shared_ptr<T> object);
+    void Insert(const std::shared_ptr<T> object, size_t position);
 
     void RemoveFirst();
     void RemoveLast();

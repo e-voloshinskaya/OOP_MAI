@@ -1,9 +1,9 @@
 #include "item.h"
 
 template <class T>
-Item<T>::Item(const std::shared_ptr<T> t)
+Item<T>::Item(const std::shared_ptr<T> o)
 {
-    this->triangle = t;
+    this->object = o;
     this->next = nullptr;
     this->prev = nullptr;
 }
@@ -11,7 +11,7 @@ Item<T>::Item(const std::shared_ptr<T> t)
 template <class T>
 Item<T>::Item(const std::shared_ptr< Item<T> > other)
 {
-    this->triangle = other->triangle;
+    this->object = other->object;
     this->next = other->next;
     this->prev = other->prev;
 }
@@ -43,13 +43,13 @@ void Item<T>::InsRight(std::shared_ptr< Item<T> > item)
 template <class T>
 std::shared_ptr<T> Item<T>::GetTriangle()
 {
-    return this->triangle;
+    return this->object;
 }
 
 template <class T>
 std::ostream &operator<<(std::ostream &os, const std::shared_ptr< Item<T> > item)
 {
-    os << item->triangle << std::endl;
+    os << item->object << std::endl;
     return os;
 }
 
