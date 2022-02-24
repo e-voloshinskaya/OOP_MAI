@@ -5,5 +5,7 @@
 #include "tlinkedlist.cpp"
 
 //creating instances of the defined in '...'.h templates
+template class Item<Triangle>;
+//template class TIterator<Triangle>;
 template class TLinkedList<Triangle>;
 template std::ostream& operator<<(std::ostream &os, const TLinkedList<Triangle> &list);

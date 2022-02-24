@@ -17,10 +17,22 @@ bool TLinkedList<T>::Empty()
 }
 
 template <class T>
+TIterator<T> TLinkedList<T>::IFirst()
+{
+    return TIterator<T> (head);
+}
+
+template <class T>
+TIterator<T> TLinkedList<T>::ILast()
+{
+    return TIterator<T> (nullptr);
+}
+
+template <class T>
 size_t TLinkedList<T>::Length()
 {
     size_t size = 0;
-    for (std::shared_ptr<Item<T>> i = head; i != nullptr; i = i->Right()) {
+    for (TIterator<T> i = IFirst(); i != ILast(); i++) {
         ++size;
     }
     return size;
@@ -43,13 +55,7 @@ const std::shared_ptr<T> TLinkedList<T>::Last()
         std::cout << "List is empty" << std::endl;
         exit(1);
     }
-    std::shared_ptr< Item<T> > pi = head;
-    std::shared_ptr< Item<T> > i = head->Right();
-
-    for (; i != nullptr; i = i -> Right()) {
-        pi = i;
-    }
-    return pi -> GetTriangle();
+    return tail -> GetTriangle();
 }
 
 template <class T>
@@ -65,11 +71,12 @@ const std::shared_ptr<T> TLinkedList<T>::GetItem(size_t idx)
         exit(1);
     }
 
-    std::shared_ptr< Item<T> > item = head;
-    for (size_t i = 1; i < idx; ++i) {
-        item = item->Right();
+    //std::shared_ptr< Item<T> > item = head;
+    TIterator<T> i = IFirst();
+    for (size_t c = 1; c < idx; ++c) {
+        i++;
     }
-    return item->GetTriangle();
+    return *i;
 }
 
 template <class T>

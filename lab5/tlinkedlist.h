@@ -2,6 +2,7 @@
 #define TLINKEDLIST_H
 
 #include "item.h"
+#include "titerator.h"
 
 template <class T>
 class TLinkedList
@@ -13,6 +14,8 @@ public:
     size_t Length();
     bool Empty();
 
+    TIterator<T> IFirst();
+    TIterator<T> ILast();
     const std::shared_ptr<T> First();
     const std::shared_ptr<T> Last();
     const std::shared_ptr<T> GetItem(size_t idx);

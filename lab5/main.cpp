@@ -20,6 +20,7 @@ int main(void)
   
   std::cout << l << std::endl;
   
+  std::cout << "Length: " << l.Length() << std::endl;
   l.Insert(t1, 1);
   std::cout << l << std::endl;
   l.Insert(t1, 3);
@@ -30,6 +31,7 @@ int main(void)
   std::cout << l << std::endl;
   l.Insert(t3, 4);
   std::cout << l << std::endl;
+  std::cout << "Length: " << l.Length() << std::endl;
   l.Insert(t3, 3);
   std::cout << l << std::endl;
   l.Insert(t2, 6);
@@ -47,6 +49,7 @@ int main(void)
   std::cout << l << std::endl;
   l.RemoveFirst();
   std::cout << l << std::endl;
+  std::cout << "Length: " << l.Length() << std::endl;
   l.RemoveLast();
   std::cout << l << std::endl;
   l.InsertFirst(t3);
@@ -59,6 +62,7 @@ int main(void)
   std::cout << *l.GetItem(4) << std::endl;
   l.Clear();
   std::cout << l << std::endl;
+  std::cout << "Length: " << l.Length() << std::endl;
   
   return 0;
 }
