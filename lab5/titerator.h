@@ -21,6 +21,11 @@ public:
         return node->GetTriangle();
     }
 
+    std::shared_ptr< Item<T> > get()
+    {
+        return node;
+    }
+
     void operator++()
     {
         node = node->Right();
@@ -31,26 +36,27 @@ public:
         node = node->Left();
     }
 
-    void operator++(int)
+    TIterator<T> operator++(int)
     {
-        //TIterator iter(*this);
-        ++(*this);
-       // return iter;
+        std::shared_ptr< Item<T> > item(new Item<T>(node));
+        TIterator<T> iter(item);
+        ++(this);
+        return iter;
     }
 
-    void operator--(int)
+    TIterator<T> operator--(int)
     {
-        //TIterator iter(*this);
+        TIterator<T> iter(*this);
         --(*this);
-        //return iter;
+        return iter;
     }
 
-    bool operator==(TIterator const &i)
+    bool operator==(TIterator<T> const &i)
     {
         return node == i.node;
     }
 
-    bool operator!=(TIterator const &i)
+    bool operator!=(TIterator<T> const &i)
     {
         return !(*this == i);
     }
