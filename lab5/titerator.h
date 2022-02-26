@@ -11,12 +11,12 @@ public:
         node = n;
     }
 
-    std::shared_ptr<T> operator*()
+    std::shared_ptr<T> operator*() const
     {
         return node->GetTriangle();
     }
 
-    std::shared_ptr<T> operator->()
+    std::shared_ptr<T> operator->() const
     {
         return node->GetTriangle();
     }
@@ -38,9 +38,8 @@ public:
 
     TIterator<T> operator++(int)
     {
-        std::shared_ptr< Item<T> > item(new Item<T>(node));
-        TIterator<T> iter(item);
-        ++(this);
+        TIterator<T> iter(*this);
+        ++(*this);
         return iter;
     }
 
