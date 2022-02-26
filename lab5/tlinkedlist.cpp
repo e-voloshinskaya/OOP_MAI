@@ -209,14 +209,27 @@ std::ostream &operator<<(std::ostream &os, const TLinkedList<T> &list)
         return os;
     }
     
-    for (TIterator<T> i = list.IFirst(); i != list.ILast(); i++) {
-        if ((i++).get() != nullptr)
-            os << (*i)->Area() << " -> ";
-        else
-            os << (*i)->Area();
-    }
-    return os;
-}
+    for (std::shared_ptr<Item<T>> i = list.head; i != nullptr; i = i->Right()) {
+         if (i->Right() != nullptr)
+             os << i->GetTriangle()->Area() << " -> ";
+         else
+             os << i->GetTriangle()->Area();
+     }
+     return os;
+ }
+ /*
+
+     for (TIterator<T> i = list.IFirst(); i != list.ILast(); i++) {
+         if ((i++).get() != nullptr)
+         if ((i++) != list.ILast())
+             os << (*i)->Area() << " -> ";
+         else
+             os << (*i)->Area();
+     }
+     return os;
+ }
+
+ */
 
 template <class T>
 void TLinkedList<T>::Clear()
