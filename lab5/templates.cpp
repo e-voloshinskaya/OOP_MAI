@@ -3,7 +3,6 @@
 #include "item.cpp" //essential as well
 #include "tlinkedlist.h"
 #include "tlinkedlist.cpp"
-//#include "titerator.h"
 
 //creating instances of the defined in '...'.h templates
 template class Item<Triangle>;
