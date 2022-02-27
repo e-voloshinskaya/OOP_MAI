@@ -15,7 +15,7 @@
     "lab2:3": "lab2",
     "lab3:3": "lab3",
     "lab4:3": "lab4",
-    "lab5:3": "__in_progress__"
+    "lab5:3": "lab5"
   },
   "reports": [
     "lab0.1",
@@ -23,6 +23,7 @@
     "lab1",
     "lab2",
     "lab3",
-    "lab4"
+    "lab4",
+    "lab5"
   ]
 }
