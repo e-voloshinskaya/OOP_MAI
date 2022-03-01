@@ -56,10 +56,18 @@ int main(void)
   std::cout << l << std::endl;
   std::cout << *l.First() << std::endl;
   std::cout << *l.Last() << std::endl;
+
+  std::cout << "Length: " << l.Length() << std::endl;
+  std::cout << "GetItem result:" << std::endl;
   std::cout << *l.GetItem(1) << std::endl;
   std::cout << *l.GetItem(2) << std::endl;
   std::cout << *l.GetItem(3) << std::endl;
   std::cout << *l.GetItem(4) << std::endl;
+  std::cout << *l.GetItem(5) << std::endl;
+  std::cout << "vs range-based for loop result:" << std::endl;
+  for (auto i : l) {
+    std::cout << *i << std::endl;
+  }
   l.Clear();
   std::cout << l << std::endl;
   std::cout << "Length: " << l.Length() << std::endl;

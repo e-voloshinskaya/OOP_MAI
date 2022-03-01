@@ -14,8 +14,8 @@ public:
     size_t Length();
     bool Empty();
 
-    TIterator<T> IFirst() const;
-    TIterator<T> ILast() const;
+    TIterator<T> begin() const;
+    TIterator<T> end() const;
     const std::shared_ptr<T> First();
     const std::shared_ptr<T> Last();
     const std::shared_ptr<T> GetItem(size_t idx);

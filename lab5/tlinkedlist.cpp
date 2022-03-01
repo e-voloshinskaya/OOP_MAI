@@ -17,13 +17,13 @@ bool TLinkedList<T>::Empty()
 }
 
 template <class T>
-TIterator<T> TLinkedList<T>::IFirst() const
+TIterator<T> TLinkedList<T>::begin() const
 {
     return TIterator<T> (head);
 }
 
 template <class T>
-TIterator<T> TLinkedList<T>::ILast() const
+TIterator<T> TLinkedList<T>::end() const
 {
     return TIterator<T> (nullptr);
 }
@@ -32,9 +32,14 @@ template <class T>
 size_t TLinkedList<T>::Length()
 {
     size_t size = 0;
-    for (TIterator<T> i = IFirst(); i != ILast(); i++) {
+    for (auto i: *this) {
         ++size;
     }
+    /*
+    for (TIterator<T> i = begin(); i != end(); i++) {
+        ++size;
+    }
+    */
     return size;
 }
 
@@ -72,7 +77,7 @@ const std::shared_ptr<T> TLinkedList<T>::GetItem(size_t idx)
     }
 
     //std::shared_ptr< Item<T> > item = head;
-    TIterator<T> i = IFirst();
+    TIterator<T> i = begin();
     for (size_t c = 1; c < idx; ++c) {
         i++;
     }
@@ -219,9 +224,9 @@ std::ostream &operator<<(std::ostream &os, const TLinkedList<T> &list)
  }
  /*
 
-     for (TIterator<T> i = list.IFirst(); i != list.ILast(); i++) {
+     for (TIterator<T> i = list.begin(); i != list.end(); i++) {
          if ((i++).get() != nullptr)
-         if ((i++) != list.ILast())
+         if ((i++) != list.end())
              os << (*i)->Area() << " -> ";
          else
              os << (*i)->Area();
